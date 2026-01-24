@@ -7,68 +7,72 @@
 
 <style>
 /* =====================
-   RESET & BASE
+   THEME VARIABLES
 ===================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --glass: rgba(255,255,255,.08);
+  --accent: #00f2ff;
 }
 
-html { scroll-behavior: smooth; }
+body.light {
+  --bg: #f4f6f8;
+  --fg: #111;
+  --glass: rgba(0,0,0,.08);
+}
+
+/* =====================
+   BASE
+===================== */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
 
 body {
-  font-family: system-ui, Segoe UI, sans-serif;
-  color: #fff;
-  background: #000;
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
   overflow-x: hidden;
 }
 
 /* =====================
-   PARTICLES
-===================== */
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-}
-
-/* =====================
-   NAVBAR
+   NAVBAR + HAMBURGER
 ===================== */
 nav {
   position: fixed;
-  top: 0;
   width: 100%;
-  z-index: 10;
+  top: 0;
   backdrop-filter: blur(6px);
-  background: rgba(0,0,0,.55);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: var(--glass);
+  z-index: 10;
 }
 
-.nav-content {
+.nav {
   max-width: 1200px;
   margin: auto;
-  padding: 15px 30px;
+  padding: 15px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-nav h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
+.menu {
+  display: none;
 }
 
-nav a {
-  color: #fff;
+.links a {
+  margin-left: 20px;
+  color: var(--fg);
   text-decoration: none;
-  margin-left: 25px;
   opacity: .8;
 }
 
-nav a:hover {
-  opacity: 1;
+.links a:hover { opacity:1; }
+
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 /* =====================
@@ -80,235 +84,175 @@ nav a:hover {
   place-items: center;
   text-align: center;
   background:
-    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.9)),
     url("images/bg.jpg") center/cover fixed;
-  position: relative;
 }
 
-.hero-content {
-  animation: fadeUp 1.5s ease forwards;
+h1.type, h2.type, p.type {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--accent);
+  animation: typing 2.5s steps(30), blink .7s infinite;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero h1 {
-  font-size: clamp(3rem, 6vw, 6rem);
-  background: linear-gradient(90deg, #00f2ff, #7d2ae8);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.hero p {
-  margin-top: 12px;
-  font-size: 1.4rem;
-  opacity: .85;
-}
+@keyframes typing { from { width:0 } to { width:100% } }
+@keyframes blink { 50% { border-color: transparent; } }
 
 /* =====================
    MORPHING SVG
 ===================== */
 .blob {
-  position: absolute;
-  width: 520px;
-  opacity: 0.3;
-  filter: blur(14px); /* reduced intensity */
+  position:absolute;
+  width:480px;
+  opacity:.25;
+  filter: blur(10px);
 }
 
 /* =====================
    SECTIONS
 ===================== */
-section {
-  padding: 120px 10%;
-}
-
-/* =====================
-   CARDS (REDUCED BLUR)
-===================== */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
-}
+section { padding:120px 10%; }
 
 .card {
-  background:
-    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.02)),
-    url("images/card-bg.jpg") center/cover;
-  backdrop-filter: blur(6px); /* reduced */
-  border-radius: 18px;
-  padding: 35px;
-  box-shadow: 0 25px 60px rgba(0,0,0,.6);
-}
-
-.card h2 {
-  margin-bottom: 10px;
-  font-size: 1.6rem;
-}
-
-.card p {
-  opacity: .85;
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  padding:35px;
+  border-radius:16px;
+  margin-bottom:30px;
 }
 
 /* =====================
-   GALLERY
+   SKILLS DASHBOARD
 ===================== */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
+.skill {
+  margin-bottom:20px;
 }
 
-.gallery img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 16px;
-  transition: transform .3s ease, box-shadow .3s ease;
+.bar {
+  height:10px;
+  background:#333;
+  border-radius:10px;
+  overflow:hidden;
 }
 
-.gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 20px 50px rgba(0,0,0,.6);
+.fill {
+  height:100%;
+  background: var(--accent);
+  width:0;
+  animation: fill 2s forwards;
+}
+
+@keyframes fill { to { width: var(--level); } }
+
+/* =====================
+   SOCIALS
+===================== */
+.socials a {
+  margin-right:20px;
+  font-size:1.2rem;
+  color: var(--fg);
+  text-decoration:none;
 }
 
 /* =====================
-   FOOTER
+   MOBILE
 ===================== */
-footer {
-  padding: 50px;
-  text-align: center;
-  background: #000;
-  opacity: .7;
+@media(max-width:768px){
+  .links { display:none; }
+  .hamburger { display:block; }
+  .menu {
+    display:none;
+    flex-direction:column;
+    background:var(--glass);
+  }
+  .menu a {
+    padding:15px;
+    text-decoration:none;
+    color:var(--fg);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
-
-<!-- NAVBAR -->
 <nav>
-  <div class="nav-content">
-    <h2>Justin Joe Mathew</h2>
-    <div>
-      <a href="#home">Home</a>
-      <a href="#profile">Profile</a>
-      <a href="#dashboard">Dashboard</a>
-      <a href="#gallery">Gallery</a>
+  <div class="nav">
+    <strong>Justin JM</strong>
+    <div class="links">
+      <a href="#skills">Skills</a>
+      <a href="#socials">Socials</a>
+      <a href="#" onclick="toggleTheme()">🌙</a>
     </div>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+  </div>
+  <div class="menu" id="menu">
+    <a href="#skills">Skills</a>
+    <a href="#socials">Socials</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="home">
+<div class="hero">
   <svg class="blob" viewBox="0 0 200 200">
-    <path id="blobPath" fill="#7d2ae8"></path>
+    <path id="blob" fill="#7d2ae8"></path>
   </svg>
 
-  <div class="hero-content">
-    <h1>Justin Joe Mathew</h1>
-    <p>Student of Computer Science Engineering</p>
+  <div>
+    <h1 class="type">Justin Joe Mathew</h1>
+    <p class="type">Computer Science Engineering Student</p>
   </div>
 </div>
 
-<!-- PROFILE -->
-<section id="profile">
-  <div class="cards">
-    <div class="card">
-      <h2>Who I Am</h2>
-      <p>
-        A Computer Science Engineering student focused on systems,
-        design, and building things from first principles.
-      </p>
-    </div>
+<section id="skills">
+  <h2 class="type">Skill Dashboard</h2>
 
-    <div class="card">
-      <h2>What I Do</h2>
-      <p>
-        Learn, experiment, and create — from low-level logic
-        to high-level interfaces.
-      </p>
-    </div>
+  <div class="skill">
+    <p>HTML / CSS</p>
+    <div class="bar"><div class="fill" style="--level:85%"></div></div>
+  </div>
 
-    <div class="card">
-      <h2>This Dashboard</h2>
-      <p>
-        A living personal profile — expandable, intentional,
-        and fully handcrafted.
-      </p>
-    </div>
+  <div class="skill">
+    <p>JavaScript</p>
+    <div class="bar"><div class="fill" style="--level:70%"></div></div>
+  </div>
+
+  <div class="skill">
+    <p>Problem Solving</p>
+    <div class="bar"><div class="fill" style="--level:75%"></div></div>
   </div>
 </section>
 
-<!-- GALLERY -->
-<section id="gallery">
-  <h2 style="margin-bottom:40px;">Gallery</h2>
-  <div class="gallery">
-    <img src="images/gallery/image1.jpg">
-    <img src="images/gallery/image2.jpg">
-    <img src="images/gallery/image3.jpg">
-    <!-- Add more images here -->
+<section id="socials">
+  <h2 class="type">Find Me</h2>
+  <div class="socials">
+    <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
+    <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
   </div>
 </section>
-
-<footer>
-  © 2026 • Justin Joe Mathew
-</footer>
 
 <script>
-/* PARTICLES */
-const c = document.getElementById("particles");
-const ctx = c.getContext("2d");
-let w, h, p=[];
-
-function resize(){
-  w=c.width=innerWidth;
-  h=c.height=innerHeight;
+/* HAMBURGER */
+function toggleMenu(){
+  const m=document.getElementById("menu");
+  m.style.display = m.style.display==="flex"?"none":"flex";
 }
-addEventListener("resize",resize);
-resize();
 
-class Part{
-  constructor(){
-    this.x=Math.random()*w;
-    this.y=Math.random()*h;
-    this.vx=(Math.random()-.5)*.4;
-    this.vy=(Math.random()-.5)*.4;
-    this.r=Math.random()*2+1;
-  }
-  u(){
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.x<0||this.x>w) this.vx*=-1;
-    if(this.y<0||this.y>h) this.vy*=-1;
-  }
-  d(){
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-    ctx.fillStyle="#00f2ff";
-    ctx.fill();
-  }
+/* THEME */
+function toggleTheme(){
+  document.body.classList.toggle("light");
 }
-for(let i=0;i<120;i++) p.push(new Part());
-(function a(){
-  ctx.clearRect(0,0,w,h);
-  p.forEach(x=>{x.u();x.d();});
-  requestAnimationFrame(a);
-})();
 
-/* SVG MORPH */
-const shapes=[
+/* SMOOTH SVG MORPH */
+const paths=[
 "M43.8,-74.5C57.2,-67.1,68.5,-57.2,74.4,-44.8C80.3,-32.4,80.8,-16.2,79.6,-0.7C78.4,14.8,75.5,29.6,68.3,42.3C61.1,55,49.6,65.6,36.4,71.7C23.2,77.8,11.6,79.4,-1.7,82.3C-15,85.2,-30,89.4,-42.1,83.4C-54.2,77.4,-63.3,61.1,-70.3,45.6C-77.3,30.1,-82.2,15,-80.3,1.1C-78.3,-12.9,-69.6,-25.8,-60.3,-37.9C-51,-50,-41.2,-61.3,-29,-70.2C-16.8,-79.1,-8.4,-85.6,3.2,-90.5C14.8,-95.4,29.6,-98.7,43.8,-74.5Z",
 "M36.7,-63.4C49.3,-56.2,62.2,-49.4,69.1,-38.7C76,-28,76.8,-14,75.6,-0.7C74.4,12.6,71.3,25.2,64.7,36.8C58.1,48.4,48,59,35.9,64.8C23.8,70.6,11.9,71.6,-1.2,73.7C-14.3,75.8,-28.6,79,-40.6,73.6C-52.6,68.2,-62.3,54.2,-68.7,39.8C-75.1,25.4,-78.2,12.7,-77.2,0.6C-76.2,-11.5,-71.2,-23,-63.4,-33.8C-55.6,-44.6,-44.9,-54.7,-32.9,-62.8C-20.9,-70.9,-10.4,-77,1.3,-79.2C13,-81.4,26,-79.7,36.7,-63.4Z"
 ];
-let si=0;
+
+let i=0;
 setInterval(()=>{
-  document.getElementById("blobPath").setAttribute("d",shapes[si]);
-  si=(si+1)%shapes.length;
-},4000);
+  document.getElementById("blob").setAttribute("d",paths[i]);
+  i=(i+1)%paths.length;
+},3500);
 </script>
 
 </body>
