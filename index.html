@@ -4,18 +4,23 @@
   <meta charset="UTF-8">
   <title>My Demo Website</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
+      color: #fff;
+
+      /* Page background image */
+      background-image: url("images/bg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
     }
 
     header {
-      background: #222;
-      color: white;
-      padding: 40px 20px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 60px 20px;
       text-align: center;
     }
 
@@ -26,74 +31,96 @@
     }
 
     .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      /* Card background image */
+      background-image: url("images/card-bg.jpg");
+      background-size: cover;
+      background-position: center;
+
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 10px;
+
+      /* Overlay so text stays readable */
+      position: relative;
+      color: #fff;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #eee;
-      font-size: 14px;
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 10px;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
     }
 
     button {
-      background: #007bff;
-      color: white;
+      background: #00bfff;
       border: none;
       padding: 12px 20px;
       border-radius: 5px;
+      color: #000;
       cursor: pointer;
       font-size: 16px;
     }
 
     button:hover {
-      background: #0056b3;
+      background: #009acd;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      font-size: 14px;
     }
   </style>
 </head>
+
 <body>
 
   <header>
     <h1>Welcome to My Demo Site</h1>
-    <p>Hosted using GitHub Pages 🚀</p>
+    <p>Background images loaded from /images folder 🌄</p>
   </header>
 
   <section>
+
     <div class="card">
       <h2>About This Website</h2>
       <p>
-        This is a simple static website created using HTML and CSS.
-        It is hosted for free using GitHub Pages.
+        This site uses background images stored locally inside
+        the <strong>images</strong> folder.
       </p>
     </div>
 
     <div class="card">
       <h2>What I’m Learning</h2>
       <ul>
-        <li>HTML basics</li>
-        <li>CSS styling</li>
-        <li>Git & GitHub</li>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>GitHub Pages</li>
       </ul>
     </div>
 
     <div class="card">
-      <h2>Try Something</h2>
-      <p>Click the button below to test JavaScript:</p>
+      <h2>Test Button</h2>
       <button onclick="sayHello()">Click Me</button>
     </div>
+
   </section>
 
   <footer>
-    © 2026 • Built by Me • Powered by GitHub Pages
+    © 2026 • GitHub Pages Demo
   </footer>
 
   <script>
     function sayHello() {
-      alert("Hello! Your demo website is working 🎉");
+      alert("Images loaded successfully 🎉");
     }
   </script>
 
