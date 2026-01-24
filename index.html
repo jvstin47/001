@@ -1,128 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Demo Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Beyond Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #fff;
+<style>
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-      /* Page background image */
-      background-image: url("bg.jpg");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    header {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 60px 20px;
-      text-align: center;
-    }
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at top, #0f2027, #000);
+  overflow-x: hidden;
+}
 
-    section {
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
+/* =========================
+   PARTICLE CANVAS
+========================= */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
 
-    .card {
-      /* Card background image */
-      background-image: url("images/bg.jpg");
-      background-size: cover;
-      background-position: center;
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.9)),
+    url("images/bg.jpg") center/cover no-repeat fixed;
+}
 
-      padding: 25px;
-      margin-bottom: 25px;
-      border-radius: 10px;
+.hero h1 {
+  font-size: clamp(3rem, 6vw, 6rem);
+  background: linear-gradient(90deg, #00f2ff, #7d2ae8);
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: glow 3s infinite alternate;
+}
 
-      /* Overlay so text stays readable */
-      position: relative;
-      color: #fff;
-    }
+.hero p {
+  font-size: 1.3rem;
+  margin-top: 15px;
+  opacity: .85;
+}
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 10px;
-    }
+@keyframes glow {
+  from { filter: drop-shadow(0 0 10px #00f2ff); }
+  to   { filter: drop-shadow(0 0 30px #7d2ae8); }
+}
 
-    .card > * {
-      position: relative;
-      z-index: 1;
-    }
+/* =========================
+   SECTIONS
+========================= */
+section {
+  padding: 120px 10%;
+}
 
-    button {
-      background: #00bfff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      color: #000;
-      cursor: pointer;
-      font-size: 16px;
-    }
+/* =========================
+   GLASS CARDS
+========================= */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+}
 
-    button:hover {
-      background: #009acd;
-    }
+.card {
+  background:
+    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.02)),
+    url("images/card-bg.jpg") center/cover;
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 40px;
+  transform-style: preserve-3d;
+  transition: transform .2s ease;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: rgba(0,0,0,0.7);
-      font-size: 14px;
-    }
-  </style>
+.card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.card p {
+  opacity: .85;
+}
+
+/* =========================
+   NEON BUTTON
+========================= */
+.btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 14px 30px;
+  border-radius: 50px;
+  background: #00f2ff;
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 0 20px #00f2ff;
+  transition: .3s;
+}
+
+.btn:hover {
+  box-shadow: 0 0 50px #7d2ae8;
+  transform: scale(1.1);
+}
+
+/* =========================
+   PARALLAX SECTION
+========================= */
+.parallax {
+  height: 70vh;
+  background:
+    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
+    url("images/bg.jpg") center/cover fixed;
+  display: grid;
+  place-items: center;
+}
+
+.parallax h2 {
+  font-size: 3rem;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  padding: 50px;
+  text-align: center;
+  background: #000;
+  opacity: .8;
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <h1>Welcome to My Demo Site</h1>
-    <p>Justin</p>
-  </header>
+<canvas id="particles"></canvas>
 
-  <section>
+<div class="hero">
+  <div>
+    <h1>Beyond Demo</h1>
+    <p>Pure HTML. Zero libraries. Maximum insanity.</p>
+    <a href="#cards" class="btn">Enter</a>
+  </div>
+</div>
 
+<section id="cards">
+  <div class="cards">
     <div class="card">
-      <h2>About This Website</h2>
-      <p>
-        This site uses background images stored locally inside
-        the <strong>images</strong> folder.
-      </p>
+      <h2>Glassmorphism</h2>
+      <p>Blurred layers, depth, light — all done with CSS.</p>
     </div>
 
     <div class="card">
-      <h2>What I’m Learning</h2>
-      <ul>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>GitHub Pages</li>
-      </ul>
+      <h2>3D Interaction</h2>
+      <p>Cards react to your mouse in real time.</p>
     </div>
 
     <div class="card">
-      <h2>Test Button</h2>
-      <button onclick="sayHello()">Click Me</button>
+      <h2>Particles</h2>
+      <p>A full canvas particle engine running silently.</p>
     </div>
+  </div>
+</section>
 
-  </section>
+<div class="parallax">
+  <h2>Scroll. Feel. React.</h2>
+</div>
 
-  <footer>
-    © 2026 • GitHub Pages Demo
-  </footer>
+<footer>
+  © 2026 • Built with obsession
+</footer>
 
-  <script>
-    function sayHello() {
-      alert("Images loaded successfully 🎉");
-    }
-  </script>
+<script>
+/* =========================
+   PARTICLES ENGINE
+========================= */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let w, h, particles = [];
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * w;
+    this.y = Math.random() * h;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.r = Math.random() * 2 + 1;
+  }
+  move() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > w) this.vx *= -1;
+    if (this.y < 0 || this.y > h) this.vy *= -1;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = "#00f2ff";
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+function animate() {
+  ctx.clearRect(0,0,w,h);
+  particles.forEach(p => {
+    p.move();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* =========================
+   3D CARD TILT
+========================= */
+document.querySelectorAll(".card").forEach(card => {
+  card.addEventListener("mousemove", e => {
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const rx = -(y / r.height - 0.5) * 15;
+    const ry = (x / r.width - 0.5) * 15;
+    card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = "rotateX(0) rotateY(0)";
+  });
+});
+</script>
 
 </body>
 </html>
