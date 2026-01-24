@@ -2,50 +2,67 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Beyond Demo</title>
+<title>Justin Joe Mathew</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* =========================
-   GLOBAL RESET
-========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
   color: #fff;
-  background: radial-gradient(circle at top, #0f2027, #000);
+  background: #000;
   overflow-x: hidden;
 }
 
-/* =========================
-   PARTICLE CANVAS
-========================= */
+/* =====================
+   BACKGROUND PARTICLES
+===================== */
 canvas {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
 }
 
-/* =========================
-   HERO SECTION
-========================= */
+/* =====================
+   HERO / DASHBOARD
+===================== */
 .hero {
   height: 100vh;
   display: grid;
   place-items: center;
   text-align: center;
   background:
-    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.9)),
-    url("images/bg.jpg") center/cover no-repeat fixed;
+    linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.95)),
+    url("images/bg.jpg") center/cover fixed;
+  position: relative;
+  overflow: hidden;
+}
+
+/* =====================
+   MORPHING SVG
+===================== */
+.blob {
+  position: absolute;
+  width: 600px;
+  opacity: 0.35;
+  filter: blur(20px);
+}
+
+.hero-content {
+  z-index: 2;
+  animation: fadeUp 1.8s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .hero h1 {
@@ -53,30 +70,22 @@ canvas {
   background: linear-gradient(90deg, #00f2ff, #7d2ae8);
   -webkit-background-clip: text;
   color: transparent;
-  animation: glow 3s infinite alternate;
+  filter: drop-shadow(0 0 30px #00f2ff);
 }
 
 .hero p {
-  font-size: 1.3rem;
   margin-top: 15px;
+  font-size: 1.4rem;
   opacity: .85;
 }
 
-@keyframes glow {
-  from { filter: drop-shadow(0 0 10px #00f2ff); }
-  to   { filter: drop-shadow(0 0 30px #7d2ae8); }
-}
-
-/* =========================
-   SECTIONS
-========================= */
+/* =====================
+   DASHBOARD SECTIONS
+===================== */
 section {
   padding: 120px 10%;
 }
 
-/* =========================
-   GLASS CARDS
-========================= */
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -85,70 +94,33 @@ section {
 
 .card {
   background:
-    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.02)),
+    linear-gradient(rgba(255,255,255,.06), rgba(255,255,255,.02)),
     url("images/card-bg.jpg") center/cover;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   border-radius: 20px;
   padding: 40px;
-  transform-style: preserve-3d;
-  transition: transform .2s ease;
   box-shadow: 0 30px 80px rgba(0,0,0,.7);
+  transition: transform .2s ease;
+  transform-style: preserve-3d;
 }
 
 .card h2 {
-  font-size: 1.8rem;
   margin-bottom: 10px;
+  font-size: 1.7rem;
 }
 
 .card p {
   opacity: .85;
 }
 
-/* =========================
-   NEON BUTTON
-========================= */
-.btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 14px 30px;
-  border-radius: 50px;
-  background: #00f2ff;
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 0 20px #00f2ff;
-  transition: .3s;
-}
-
-.btn:hover {
-  box-shadow: 0 0 50px #7d2ae8;
-  transform: scale(1.1);
-}
-
-/* =========================
-   PARALLAX SECTION
-========================= */
-.parallax {
-  height: 70vh;
-  background:
-    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
-    url("images/bg.jpg") center/cover fixed;
-  display: grid;
-  place-items: center;
-}
-
-.parallax h2 {
-  font-size: 3rem;
-}
-
-/* =========================
+/* =====================
    FOOTER
-========================= */
+===================== */
 footer {
   padding: 50px;
   text-align: center;
   background: #000;
-  opacity: .8;
+  opacity: .7;
 }
 </style>
 </head>
@@ -157,65 +129,81 @@ footer {
 
 <canvas id="particles"></canvas>
 
+<!-- =====================
+     HERO / PROFILE
+===================== -->
 <div class="hero">
-  <div>
-    <h1>Beyond Demo</h1>
-    <p>Pure HTML. Zero libraries. Maximum insanity.</p>
-    <a href="#cards" class="btn">Enter</a>
+
+  <!-- Morphing SVG -->
+  <svg class="blob" viewBox="0 0 200 200">
+    <path id="blobPath" fill="#7d2ae8"></path>
+  </svg>
+
+  <div class="hero-content">
+    <h1>Justin Joe Mathew</h1>
+    <p>Student of Computer Science Engineering</p>
   </div>
 </div>
 
-<section id="cards">
+<!-- =====================
+     PROFILE DASHBOARD
+===================== -->
+<section>
   <div class="cards">
     <div class="card">
-      <h2>Glassmorphism</h2>
-      <p>Blurred layers, depth, light — all done with CSS.</p>
+      <h2>Who I Am</h2>
+      <p>
+        A Computer Science Engineering student passionate about
+        building systems, interfaces, and experiences that feel alive.
+      </p>
     </div>
 
     <div class="card">
-      <h2>3D Interaction</h2>
-      <p>Cards react to your mouse in real time.</p>
+      <h2>What I Work With</h2>
+      <p>
+        Programming fundamentals, web technologies, problem solving,
+        and a deep curiosity for how things work under the hood.
+      </p>
     </div>
 
     <div class="card">
-      <h2>Particles</h2>
-      <p>A full canvas particle engine running silently.</p>
+      <h2>What This Is</h2>
+      <p>
+        A personal dashboard — part portfolio, part playground,
+        fully handcrafted.
+      </p>
     </div>
   </div>
 </section>
 
-<div class="parallax">
-  <h2>Scroll. Feel. React.</h2>
-</div>
-
 <footer>
-  © 2026 • Built with obsession
+  © 2026 • Justin Joe Mathew
 </footer>
 
 <script>
-/* =========================
+/* =====================
    PARTICLES ENGINE
-========================= */
+===================== */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 let w, h, particles = [];
 
 function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
+  w = canvas.width = innerWidth;
+  h = canvas.height = innerHeight;
 }
-window.addEventListener("resize", resize);
+addEventListener("resize", resize);
 resize();
 
 class Particle {
   constructor() {
     this.x = Math.random() * w;
     this.y = Math.random() * h;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
+    this.vx = (Math.random() - 0.5) * 0.4;
+    this.vy = (Math.random() - 0.5) * 0.4;
     this.r = Math.random() * 2 + 1;
   }
-  move() {
+  update() {
     this.x += this.vx;
     this.y += this.vy;
     if (this.x < 0 || this.x > w) this.vx *= -1;
@@ -229,35 +217,36 @@ class Particle {
   }
 }
 
-for (let i = 0; i < 120; i++) particles.push(new Particle());
+for (let i = 0; i < 140; i++) particles.push(new Particle());
 
-function animate() {
+function animateParticles() {
   ctx.clearRect(0,0,w,h);
   particles.forEach(p => {
-    p.move();
+    p.update();
     p.draw();
   });
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateParticles);
 }
-animate();
+animateParticles();
 
-/* =========================
-   3D CARD TILT
-========================= */
-document.querySelectorAll(".card").forEach(card => {
-  card.addEventListener("mousemove", e => {
-    const r = card.getBoundingClientRect();
-    const x = e.clientX - r.left;
-    const y = e.clientY - r.top;
-    const rx = -(y / r.height - 0.5) * 15;
-    const ry = (x / r.width - 0.5) * 15;
-    card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
-  });
+/* =====================
+   MORPHING SVG LOGIC
+===================== */
+const shapes = [
+  "M43.8,-74.5C57.2,-67.1,68.5,-57.2,74.4,-44.8C80.3,-32.4,80.8,-16.2,79.6,-0.7C78.4,14.8,75.5,29.6,68.3,42.3C61.1,55,49.6,65.6,36.4,71.7C23.2,77.8,11.6,79.4,-1.7,82.3C-15,85.2,-30,89.4,-42.1,83.4C-54.2,77.4,-63.3,61.1,-70.3,45.6C-77.3,30.1,-82.2,15,-80.3,1.1C-78.3,-12.9,-69.6,-25.8,-60.3,-37.9C-51,-50,-41.2,-61.3,-29,-70.2C-16.8,-79.1,-8.4,-85.6,3.2,-90.5C14.8,-95.4,29.6,-98.7,43.8,-74.5Z",
+  "M36.7,-63.4C49.3,-56.2,62.2,-49.4,69.1,-38.7C76,-28,76.8,-14,75.6,-0.7C74.4,12.6,71.3,25.2,64.7,36.8C58.1,48.4,48,59,35.9,64.8C23.8,70.6,11.9,71.6,-1.2,73.7C-14.3,75.8,-28.6,79,-40.6,73.6C-52.6,68.2,-62.3,54.2,-68.7,39.8C-75.1,25.4,-78.2,12.7,-77.2,0.6C-76.2,-11.5,-71.2,-23,-63.4,-33.8C-55.6,-44.6,-44.9,-54.7,-32.9,-62.8C-20.9,-70.9,-10.4,-77,1.3,-79.2C13,-81.4,26,-79.7,36.7,-63.4Z"
+];
 
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "rotateX(0) rotateY(0)";
-  });
-});
+let i = 0;
+const blob = document.getElementById("blobPath");
+
+function morph() {
+  blob.setAttribute("d", shapes[i]);
+  i = (i + 1) % shapes.length;
+}
+
+morph();
+setInterval(morph, 4000);
 </script>
 
 </body>
