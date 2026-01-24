@@ -2,333 +2,298 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Justin Joe Mathew</title>
+<title>47 — Justin Joe Mathew</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* =====================
-   THEME VARIABLES
-===================== */
 :root {
-  --bg: #000;
-  --fg: #fff;
-  --glass: rgba(255,255,255,.07);
-  --accent: #00f2ff;
+  --accent: #e8a1a1;
+  --accent-soft: #f3caca;
+  --glass: rgba(255,255,255,0.08);
 }
 
-body.light {
-  --bg: #f4f6f8;
-  --fg: #111;
-  --glass: rgba(0,0,0,.08);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* =====================
-   BASE
-===================== */
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior: smooth; }
 
 body {
   font-family: system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--fg);
+  background: #0d0a0a;
+  color: #fff;
   overflow-x: hidden;
 }
 
-/* =====================
-   PARTICLES
-===================== */
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-}
-
-/* =====================
-   NAVBAR
-===================== */
+/* ================= NAV BAR ================= */
 nav {
   position: fixed;
   top: 0;
   width: 100%;
-  backdrop-filter: blur(6px);
-  background: var(--glass);
-  z-index: 10;
-  border-bottom: 1px solid rgba(255,255,255,.1);
-}
-
-.nav {
-  max-width: 1200px;
-  margin: auto;
-  padding: 14px 25px;
+  padding: 15px 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: rgba(10,5,5,.65);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
 }
 
-.links a {
-  margin-left: 20px;
+nav .logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+nav ul li a {
   text-decoration: none;
-  color: var(--fg);
+  color: #fff;
   opacity: .85;
 }
 
-.links a:hover { opacity:1; }
-
-.hamburger {
+.menu-toggle {
   display: none;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   cursor: pointer;
 }
 
-.mobile-menu {
-  display: none;
-  flex-direction: column;
-  background: var(--glass);
-}
-
-.mobile-menu a {
-  padding: 15px 25px;
-  color: var(--fg);
-  text-decoration: none;
-}
-
-/* =====================
-   HERO
-===================== */
+/* ================= HERO ================= */
 .hero {
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
   place-items: center;
   text-align: center;
   background:
-    linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.9)),
+    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
     url("images/bg.jpg") center/cover fixed;
   position: relative;
 }
 
-.hero-content {
-  animation: fadeUp 1.4s ease forwards;
+.hero h1 {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  color: var(--accent);
 }
 
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(40px); }
-  to { opacity:1; transform:translateY(0); }
+.hero p {
+  font-size: 1.4rem;
+  opacity: .85;
+  margin-top: 15px;
 }
 
-/* =====================
-   TYPEWRITER
-===================== */
-.type {
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid var(--accent);
-  animation: typing 2.5s steps(30), blink .7s infinite;
-}
-
-@keyframes typing { from { width:0 } to { width:100% } }
-@keyframes blink { 50% { border-color:transparent; } }
-
-/* =====================
-   MORPHING SVG
-===================== */
+/* ================= MORPHING SVG ================= */
 .blob {
-  position:absolute;
-  width:520px;
-  opacity:.3;
-  filter: blur(12px);
+  position: absolute;
+  width: 550px;
+  opacity: .25;
+  filter: blur(15px);
 }
 
-/* =====================
-   SECTIONS
-===================== */
-section { padding:120px 10%; }
+/* ================= SECTIONS ================= */
+section {
+  padding: 120px 10%;
+}
 
-/* =====================
-   CARDS
-===================== */
 .cards {
-  display:grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-  gap:40px;
+  gap: 40px;
 }
 
 .card {
-  background:
-    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.02)),
-    url("images/card-bg.jpg") center/cover;
-  backdrop-filter: blur(6px);
-  padding:35px;
-  border-radius:18px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 40px;
 }
 
-/* =====================
-   SKILLS
-===================== */
-.skill { margin-bottom:20px; }
+/* ================= SKILLS ================= */
+.skill {
+  margin-bottom: 20px;
+}
 
 .bar {
-  height:10px;
-  background:#333;
-  border-radius:10px;
-  overflow:hidden;
+  height: 8px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.fill {
-  height:100%;
-  background:var(--accent);
-  width:0;
-  animation: fill 2s forwards;
+.bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
 }
 
-@keyframes fill { to { width: var(--level); } }
-
-/* =====================
-   GALLERY
-===================== */
+/* ================= GALLERY ================= */
 .gallery {
-  display:grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-  gap:25px;
+  gap: 30px;
 }
 
-.gallery img {
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  border-radius:16px;
-  transition:.3s;
+figure {
+  background: var(--glass);
+  border-radius: 15px;
+  overflow: hidden;
 }
 
-.gallery img:hover {
-  transform: scale(1.05);
+figure img {
+  width: 100%;
+  display: block;
 }
 
-/* =====================
-   SOCIALS
-===================== */
+figcaption {
+  padding: 12px;
+  font-size: .9rem;
+  opacity: .8;
+}
+
+/* ================= SOCIALS ================= */
 .socials a {
-  margin-right:20px;
-  text-decoration:none;
-  color:var(--fg);
-  font-weight:500;
+  display: inline-block;
+  margin-right: 20px;
+  color: var(--accent-soft);
+  text-decoration: none;
 }
 
-/* =====================
-   MOBILE
-===================== */
-@media(max-width:768px){
-  .links { display:none; }
-  .hamburger { display:block; }
+/* ================= FOOTER ================= */
+footer {
+  padding: 40px;
+  text-align: center;
+  opacity: .6;
+}
+
+/* ================= MOBILE ================= */
+@media(max-width: 768px) {
+  nav ul {
+    position: absolute;
+    top: 70px;
+    right: 8%;
+    flex-direction: column;
+    background: rgba(0,0,0,.85);
+    padding: 20px;
+    display: none;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="particles"></canvas>
-
 <nav>
-  <div class="nav">
-    <strong>Justin JM</strong>
-    <div class="links">
-      <a href="#home">Home</a>
-      <a href="#profile">Profile</a>
-      <a href="#skills">Skills</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#" onclick="toggleTheme()">🌙</a>
-    </div>
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-  </div>
-  <div class="mobile-menu" id="menu">
-    <a href="#home">Home</a>
-    <a href="#profile">Profile</a>
-    <a href="#skills">Skills</a>
-    <a href="#gallery">Gallery</a>
-  </div>
+  <div class="logo">47</div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <ul id="menu">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<div class="hero" id="home">
+<!-- ================= HERO ================= -->
+<div class="hero">
   <svg class="blob" viewBox="0 0 200 200">
-    <path id="blobPath" fill="#7d2ae8"></path>
+    <path id="blobPath" fill="#e8a1a1"></path>
   </svg>
 
-  <div class="hero-content">
+  <div>
     <h1 class="type">Justin Joe Mathew</h1>
     <p class="type">Computer Science Engineering Student</p>
   </div>
 </div>
 
-<!-- PROFILE -->
-<section id="profile">
+<!-- ================= ABOUT ================= -->
+<section id="about">
   <div class="cards">
     <div class="card">
-      <h2>Who I Am</h2>
-      <p>A Computer Science Engineering student who enjoys building and breaking systems.</p>
-    </div>
-    <div class="card">
-      <h2>What I Do</h2>
-      <p>Web, logic, problem solving, and constant experimentation.</p>
+      Curious engineer who enjoys building things that look simple but
+      have depth underneath.
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
+<!-- ================= SKILLS ================= -->
 <section id="skills">
-  <h2 class="type">Skill Dashboard</h2>
-
   <div class="skill">
-    <p>HTML / CSS</p>
-    <div class="bar"><div class="fill" style="--level:85%"></div></div>
+    HTML / CSS
+    <div class="bar"><span style="width:80%"></span></div>
   </div>
-
   <div class="skill">
-    <p>JavaScript</p>
-    <div class="bar"><div class="fill" style="--level:70%"></div></div>
+    JavaScript
+    <div class="bar"><span style="width:65%"></span></div>
   </div>
 </section>
 
-<!-- GALLERY -->
+<!-- ================= GALLERY ================= -->
 <section id="gallery">
-  <h2 class="type">Gallery</h2>
   <div class="gallery">
-    <img src="images/gallery/image1.jpg">
-    <img src="images/gallery/image2.jpg">
-    <img src="images/gallery/image3.jpg">
+    <figure>
+      <img src="images/img1.jpg">
+      <figcaption>When: 2024 · Where: College · Why: First project</figcaption>
+    </figure>
+    <figure>
+      <img src="images/img2.jpg">
+      <figcaption>Late night build session</figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- SOCIALS -->
-<section>
-  <h2 class="type">Connect</h2>
+<!-- ================= CONTACT ================= -->
+<section id="contact">
   <div class="socials">
-    <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
-    <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+    <p>📧 jvstin47@gmail.com</p>
   </div>
 </section>
+
+<footer>
+  © 2026 — 47
+</footer>
 
 <script>
-/* HAMBURGER */
+/* Hamburger */
 function toggleMenu(){
-  const m=document.getElementById("menu");
-  m.style.display = m.style.display==="flex"?"none":"flex";
+  document.getElementById("menu").classList.toggle("show");
 }
 
-/* THEME */
-function toggleTheme(){
-  document.body.classList.toggle("light");
-}
+/* Typewriter (no cursor) */
+document.querySelectorAll(".type").forEach(el=>{
+  const text = el.textContent;
+  el.textContent = "";
+  let i = 0;
+  setInterval(()=>{
+    if(i < text.length){
+      el.textContent += text[i++];
+    }
+  }, 60);
+});
 
-/* SVG MORPH (smooth loop illusion) */
-const shapes=[
+/* SVG morph */
+const shapes = [
 "M43.8,-74.5C57.2,-67.1,68.5,-57.2,74.4,-44.8C80.3,-32.4,80.8,-16.2,79.6,-0.7C78.4,14.8,75.5,29.6,68.3,42.3C61.1,55,49.6,65.6,36.4,71.7C23.2,77.8,11.6,79.4,-1.7,82.3C-15,85.2,-30,89.4,-42.1,83.4C-54.2,77.4,-63.3,61.1,-70.3,45.6C-77.3,30.1,-82.2,15,-80.3,1.1C-78.3,-12.9,-69.6,-25.8,-60.3,-37.9C-51,-50,-41.2,-61.3,-29,-70.2C-16.8,-79.1,-8.4,-85.6,3.2,-90.5C14.8,-95.4,29.6,-98.7,43.8,-74.5Z",
 "M36.7,-63.4C49.3,-56.2,62.2,-49.4,69.1,-38.7C76,-28,76.8,-14,75.6,-0.7C74.4,12.6,71.3,25.2,64.7,36.8C58.1,48.4,48,59,35.9,64.8C23.8,70.6,11.9,71.6,-1.2,73.7C-14.3,75.8,-28.6,79,-40.6,73.6C-52.6,68.2,-62.3,54.2,-68.7,39.8C-75.1,25.4,-78.2,12.7,-77.2,0.6C-76.2,-11.5,-71.2,-23,-63.4,-33.8C-55.6,-44.6,-44.9,-54.7,-32.9,-62.8C-20.9,-70.9,-10.4,-77,1.3,-79.2C13,-81.4,26,-79.7,36.7,-63.4Z"
 ];
 let i=0;
 setInterval(()=>{
-  document.getElementById("blobPath").setAttribute("d",shapes[i]);
-  i=(i+1)%shapes.length;
+  document.getElementById("blobPath").setAttribute("d",shapes[i++%2]);
 },4000);
 </script>
 
