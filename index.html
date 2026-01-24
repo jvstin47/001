@@ -12,7 +12,7 @@
 :root {
   --bg: #000;
   --fg: #fff;
-  --glass: rgba(255,255,255,.08);
+  --glass: rgba(255,255,255,.07);
   --accent: #00f2ff;
 }
 
@@ -36,43 +36,61 @@ body {
 }
 
 /* =====================
-   NAVBAR + HAMBURGER
+   PARTICLES
+===================== */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+/* =====================
+   NAVBAR
 ===================== */
 nav {
   position: fixed;
-  width: 100%;
   top: 0;
+  width: 100%;
   backdrop-filter: blur(6px);
   background: var(--glass);
   z-index: 10;
+  border-bottom: 1px solid rgba(255,255,255,.1);
 }
 
 .nav {
   max-width: 1200px;
   margin: auto;
-  padding: 15px 25px;
+  padding: 14px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.menu {
-  display: none;
-}
-
 .links a {
   margin-left: 20px;
-  color: var(--fg);
   text-decoration: none;
-  opacity: .8;
+  color: var(--fg);
+  opacity: .85;
 }
 
 .links a:hover { opacity:1; }
 
 .hamburger {
   display: none;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   cursor: pointer;
+}
+
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--glass);
+}
+
+.mobile-menu a {
+  padding: 15px 25px;
+  color: var(--fg);
+  text-decoration: none;
 }
 
 /* =====================
@@ -84,11 +102,24 @@ nav {
   place-items: center;
   text-align: center;
   background:
-    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.9)),
+    linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.9)),
     url("images/bg.jpg") center/cover fixed;
+  position: relative;
 }
 
-h1.type, h2.type, p.type {
+.hero-content {
+  animation: fadeUp 1.4s ease forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(40px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* =====================
+   TYPEWRITER
+===================== */
+.type {
   overflow: hidden;
   white-space: nowrap;
   border-right: 2px solid var(--accent);
@@ -96,16 +127,16 @@ h1.type, h2.type, p.type {
 }
 
 @keyframes typing { from { width:0 } to { width:100% } }
-@keyframes blink { 50% { border-color: transparent; } }
+@keyframes blink { 50% { border-color:transparent; } }
 
 /* =====================
    MORPHING SVG
 ===================== */
 .blob {
   position:absolute;
-  width:480px;
-  opacity:.25;
-  filter: blur(10px);
+  width:520px;
+  opacity:.3;
+  filter: blur(12px);
 }
 
 /* =====================
@@ -113,20 +144,28 @@ h1.type, h2.type, p.type {
 ===================== */
 section { padding:120px 10%; }
 
+/* =====================
+   CARDS
+===================== */
+.cards {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  gap:40px;
+}
+
 .card {
-  background: var(--glass);
+  background:
+    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.02)),
+    url("images/card-bg.jpg") center/cover;
   backdrop-filter: blur(6px);
   padding:35px;
-  border-radius:16px;
-  margin-bottom:30px;
+  border-radius:18px;
 }
 
 /* =====================
-   SKILLS DASHBOARD
+   SKILLS
 ===================== */
-.skill {
-  margin-bottom:20px;
-}
+.skill { margin-bottom:20px; }
 
 .bar {
   height:10px;
@@ -137,7 +176,7 @@ section { padding:120px 10%; }
 
 .fill {
   height:100%;
-  background: var(--accent);
+  background:var(--accent);
   width:0;
   animation: fill 2s forwards;
 }
@@ -145,13 +184,34 @@ section { padding:120px 10%; }
 @keyframes fill { to { width: var(--level); } }
 
 /* =====================
+   GALLERY
+===================== */
+.gallery {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap:25px;
+}
+
+.gallery img {
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  border-radius:16px;
+  transition:.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+/* =====================
    SOCIALS
 ===================== */
 .socials a {
   margin-right:20px;
-  font-size:1.2rem;
-  color: var(--fg);
   text-decoration:none;
+  color:var(--fg);
+  font-weight:500;
 }
 
 /* =====================
@@ -160,49 +220,61 @@ section { padding:120px 10%; }
 @media(max-width:768px){
   .links { display:none; }
   .hamburger { display:block; }
-  .menu {
-    display:none;
-    flex-direction:column;
-    background:var(--glass);
-  }
-  .menu a {
-    padding:15px;
-    text-decoration:none;
-    color:var(--fg);
-  }
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="particles"></canvas>
+
 <nav>
   <div class="nav">
     <strong>Justin JM</strong>
     <div class="links">
+      <a href="#home">Home</a>
+      <a href="#profile">Profile</a>
       <a href="#skills">Skills</a>
-      <a href="#socials">Socials</a>
+      <a href="#gallery">Gallery</a>
       <a href="#" onclick="toggleTheme()">🌙</a>
     </div>
     <div class="hamburger" onclick="toggleMenu()">☰</div>
   </div>
-  <div class="menu" id="menu">
+  <div class="mobile-menu" id="menu">
+    <a href="#home">Home</a>
+    <a href="#profile">Profile</a>
     <a href="#skills">Skills</a>
-    <a href="#socials">Socials</a>
+    <a href="#gallery">Gallery</a>
   </div>
 </nav>
 
-<div class="hero">
+<!-- HERO -->
+<div class="hero" id="home">
   <svg class="blob" viewBox="0 0 200 200">
-    <path id="blob" fill="#7d2ae8"></path>
+    <path id="blobPath" fill="#7d2ae8"></path>
   </svg>
 
-  <div>
+  <div class="hero-content">
     <h1 class="type">Justin Joe Mathew</h1>
     <p class="type">Computer Science Engineering Student</p>
   </div>
 </div>
 
+<!-- PROFILE -->
+<section id="profile">
+  <div class="cards">
+    <div class="card">
+      <h2>Who I Am</h2>
+      <p>A Computer Science Engineering student who enjoys building and breaking systems.</p>
+    </div>
+    <div class="card">
+      <h2>What I Do</h2>
+      <p>Web, logic, problem solving, and constant experimentation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
 <section id="skills">
   <h2 class="type">Skill Dashboard</h2>
 
@@ -215,15 +287,21 @@ section { padding:120px 10%; }
     <p>JavaScript</p>
     <div class="bar"><div class="fill" style="--level:70%"></div></div>
   </div>
+</section>
 
-  <div class="skill">
-    <p>Problem Solving</p>
-    <div class="bar"><div class="fill" style="--level:75%"></div></div>
+<!-- GALLERY -->
+<section id="gallery">
+  <h2 class="type">Gallery</h2>
+  <div class="gallery">
+    <img src="images/gallery/img1.jpg">
+    <img src="images/gallery/img2.jpg">
+    <img src="images/gallery/img3.jpg">
   </div>
 </section>
 
-<section id="socials">
-  <h2 class="type">Find Me</h2>
+<!-- SOCIALS -->
+<section>
+  <h2 class="type">Connect</h2>
   <div class="socials">
     <a href="https://instagram.com/yourhandle" target="_blank">Instagram</a>
     <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
@@ -242,17 +320,16 @@ function toggleTheme(){
   document.body.classList.toggle("light");
 }
 
-/* SMOOTH SVG MORPH */
-const paths=[
+/* SVG MORPH (smooth loop illusion) */
+const shapes=[
 "M43.8,-74.5C57.2,-67.1,68.5,-57.2,74.4,-44.8C80.3,-32.4,80.8,-16.2,79.6,-0.7C78.4,14.8,75.5,29.6,68.3,42.3C61.1,55,49.6,65.6,36.4,71.7C23.2,77.8,11.6,79.4,-1.7,82.3C-15,85.2,-30,89.4,-42.1,83.4C-54.2,77.4,-63.3,61.1,-70.3,45.6C-77.3,30.1,-82.2,15,-80.3,1.1C-78.3,-12.9,-69.6,-25.8,-60.3,-37.9C-51,-50,-41.2,-61.3,-29,-70.2C-16.8,-79.1,-8.4,-85.6,3.2,-90.5C14.8,-95.4,29.6,-98.7,43.8,-74.5Z",
 "M36.7,-63.4C49.3,-56.2,62.2,-49.4,69.1,-38.7C76,-28,76.8,-14,75.6,-0.7C74.4,12.6,71.3,25.2,64.7,36.8C58.1,48.4,48,59,35.9,64.8C23.8,70.6,11.9,71.6,-1.2,73.7C-14.3,75.8,-28.6,79,-40.6,73.6C-52.6,68.2,-62.3,54.2,-68.7,39.8C-75.1,25.4,-78.2,12.7,-77.2,0.6C-76.2,-11.5,-71.2,-23,-63.4,-33.8C-55.6,-44.6,-44.9,-54.7,-32.9,-62.8C-20.9,-70.9,-10.4,-77,1.3,-79.2C13,-81.4,26,-79.7,36.7,-63.4Z"
 ];
-
 let i=0;
 setInterval(()=>{
-  document.getElementById("blob").setAttribute("d",paths[i]);
-  i=(i+1)%paths.length;
-},3500);
+  document.getElementById("blobPath").setAttribute("d",shapes[i]);
+  i=(i+1)%shapes.length;
+},4000);
 </script>
 
 </body>
