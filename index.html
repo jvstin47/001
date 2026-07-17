@@ -2,14 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>47 — Justin Joe Mathew</title>
+<title>Justin Joe Mathew — Portfolio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --accent: #e8a1a1;
-  --accent-soft: #f3caca;
-  --glass: rgba(255,255,255,0.08);
+  --background: #080606;
+  --accent: #ff7a7a;
+  --accent-rgb: 255, 122, 122;
+  --violet: #c084fc;
+  --violet-rgb: 192, 132, 252;
+  --glass: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.05);
+  --glass-hover: rgba(255, 255, 255, 0.05);
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
 }
 
 * {
@@ -18,13 +29,73 @@
   box-sizing: border-box;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  font-family: system-ui, sans-serif;
-  background: #0d0a0a;
-  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
   overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* ================= BACKGROUND GLOWS ================= */
+body::before {
+  content: '';
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(var(--violet-rgb), 0.12) 0%, rgba(0,0,0,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(60px);
+  animation: floatGlow1 20s infinite alternate ease-in-out;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -10%;
+  right: -10%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.12) 0%, rgba(0,0,0,0) 70%);
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(60px);
+  animation: floatGlow2 20s infinite alternate ease-in-out;
+}
+
+@keyframes floatGlow1 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(10%, 10%) scale(1.1); }
+}
+
+@keyframes floatGlow2 {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(-10%, -10%) scale(1.1); }
+}
+
+.grid-overlay {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ================= TYPOGRAPHY ================= */
+h1, h2, h3, h4, .logo {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.02em;
 }
 
 /* ================= NAV BAR ================= */
@@ -32,154 +103,491 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 15px 8%;
+  padding: 20px 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(10,5,5,.65);
-  backdrop-filter: blur(6px);
+  background: rgba(8, 6, 6, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--glass-border);
   z-index: 1000;
 }
 
 nav .logo {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  gap: 30px;
+  gap: 32px;
+  align-items: center;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: #fff;
-  opacity: .85;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 8px 0;
+}
+
+nav ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover {
+  color: var(--accent);
+}
+
+nav ul li a:hover::after {
+  width: 100%;
 }
 
 .menu-toggle {
   display: none;
   font-size: 1.8rem;
   cursor: pointer;
+  color: var(--text-primary);
 }
 
 /* ================= HERO ================= */
 .hero {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  background:
-    linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.9)),
-    url("images/bg.jpg") center/cover fixed;
   position: relative;
+  padding: 0 10%;
+  margin-top: 40px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
 }
 
 .hero h1 {
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  color: var(--accent);
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 30%, var(--accent-soft, #fca3a3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero p {
-  font-size: 1.4rem;
-  opacity: .85;
-  margin-top: 15px;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: var(--text-secondary);
+  font-weight: 400;
+  min-height: 40px; /* Prevent layout shift during typing */
+}
+
+.type-cursor {
+  display: inline-block;
+  background-color: var(--accent);
+  width: 3px;
+  height: 1.2em;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
 /* ================= MORPHING SVG ================= */
 .blob {
   position: absolute;
-  width: 550px;
-  opacity: .25;
-  filter: blur(15px);
+  width: min(500px, 90vw);
+  height: min(500px, 90vh);
+  opacity: 0.15;
+  filter: blur(8px);
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* ================= SECTIONS ================= */
 section {
-  padding: 120px 10%;
+  padding: 120px 8%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.cards {
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: 50px;
+  text-align: center;
+  position: relative;
+  background: linear-gradient(135deg, #fff 40%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--violet));
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* ================= ABOUT / IDE CARD ================= */
+.about-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+  grid-template-columns: 1fr;
   gap: 40px;
+  align-items: center;
 }
 
-.card {
-  background: var(--glass);
-  backdrop-filter: blur(8px);
-  border-radius: 20px;
-  padding: 40px;
+/* VS Code Style Mockup */
+.ide-window {
+  background: #110e0e;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
 }
+
+.ide-header {
+  background: #181414;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.ide-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.ide-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.ide-dot.red { background: #ff5f56; }
+.ide-dot.yellow { background: #ffbd2e; }
+.ide-dot.green { background: #27c93f; }
+
+.ide-title {
+  color: var(--text-secondary);
+  font-family: monospace;
+  font-size: 0.85rem;
+  margin-left: 24px;
+}
+
+.ide-content {
+  padding: 24px;
+  font-family: 'Consolas', 'Courier New', Courier, monospace;
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  color: #a9b7c6;
+  overflow-x: auto;
+  line-height: 1.7;
+}
+
+.ide-content .key { color: var(--accent); }
+.ide-content .val { color: var(--violet); }
+.ide-content .syntax { color: #808080; }
 
 /* ================= SKILLS ================= */
-.skill {
-  margin-bottom: 20px;
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
 }
 
-.bar {
-  height: 8px;
-  background: #333;
-  border-radius: 10px;
-  overflow: hidden;
+.skill-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
-.bar span {
-  display: block;
+.skill-card:hover {
+  transform: translateY(-8px);
+  background: var(--glass-hover);
+  border-color: rgba(var(--violet-rgb), 0.3);
+  box-shadow: 0 10px 30px rgba(var(--violet-rgb), 0.1);
+}
+
+.skill-circle-container {
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.skill-circle {
+  width: 100%;
   height: 100%;
-  background: var(--accent);
+  transform: rotate(-90deg);
+}
+
+.skill-circle circle {
+  fill: none;
+  stroke-width: 8;
+  cx: 50;
+  cy: 50;
+  r: 40;
+}
+
+.skill-circle .bg-circle {
+  stroke: rgba(255, 255, 255, 0.03);
+}
+
+.skill-circle .fg-circle {
+  stroke: url(#skillGrad);
+  stroke-dasharray: 251.2;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s ease-in-out;
+}
+
+.skill-percent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--text-primary);
+}
+
+.skill-name {
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 /* ================= GALLERY ================= */
-.gallery {
+.gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
 }
 
 figure {
   background: var(--glass);
-  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
   overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  aspect-ratio: 4/3;
+  cursor: pointer;
+}
+
+figure:hover {
+  transform: translateY(-6px);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  box-shadow: 0 15px 35px rgba(var(--accent-rgb), 0.1);
 }
 
 figure img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+figure:hover img {
+  transform: scale(1.08);
 }
 
 figcaption {
-  padding: 12px;
-  font-size: .9rem;
-  opacity: .8;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(8, 6, 6, 0.95) 0%, rgba(8, 6, 6, 0.4) 60%, transparent 100%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-top: 1px solid rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-/* ================= SOCIALS ================= */
-.socials a {
-  display: inline-block;
-  margin-right: 20px;
-  color: var(--accent-soft);
+figcaption h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+figcaption p {
+  font-size: 0.9rem;
+  color: var(--accent-soft, #fca3a3);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ================= CONTACT ================= */
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.form-group input, .form-group textarea {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--violet);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 0 15px rgba(var(--violet-rgb), 0.15);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-socials {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.contact-socials a {
+  color: var(--text-secondary);
+  font-weight: 600;
   text-decoration: none;
+  transition: color 0.3s ease;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.contact-socials a:hover {
+  color: var(--accent);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, var(--accent), var(--violet));
+  border: none;
+  border-radius: 12px;
+  padding: 18px 30px;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-top: 10px;
+  box-shadow: 0 10px 20px rgba(var(--accent-rgb), 0.15);
+}
+
+.btn-submit:hover {
+  transform: scale(1.02);
+  box-shadow: 0 15px 25px rgba(var(--accent-rgb), 0.25);
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
 }
 
 /* ================= FOOTER ================= */
 footer {
-  padding: 40px;
+  padding: 50px 0;
   text-align: center;
-  opacity: .6;
+  border-top: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
 }
 
-/* ================= MOBILE ================= */
+footer span {
+  color: var(--accent);
+}
+
+/* ================= MOBILE RESPONSIVENESS ================= */
 @media(max-width: 768px) {
+  nav {
+    padding: 15px 6%;
+  }
+
   nav ul {
-    position: absolute;
-    top: 70px;
-    right: 8%;
+    position: fixed;
+    top: 73px;
+    left: 0;
+    width: 100%;
     flex-direction: column;
-    background: rgba(0,0,0,.85);
-    padding: 20px;
+    background: rgba(8, 6, 6, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 40px 0;
+    gap: 30px;
     display: none;
   }
 
@@ -190,126 +598,262 @@ footer {
   .menu-toggle {
     display: block;
   }
+
+  section {
+    padding: 80px 6%;
+  }
+
+  .ide-content {
+    font-size: 0.8rem;
+    padding: 16px;
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- Circular Gradients SVG Definition (For stroke gradients) -->
+<svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="skillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7a7a" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="grid-overlay"></div>
+
+<!-- ================= NAV BAR ================= -->
 <nav>
   <div class="logo">47</div>
-  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <div class="menu-toggle" id="menuBtn" onclick="toggleMenu()">☰</div>
   <ul id="menu">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
+    <li><a href="#gallery" onclick="closeMenu()">Gallery</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
   </ul>
 </nav>
 
 <!-- ================= HERO ================= -->
 <div class="hero">
-  <svg class="blob" viewBox="0 0 200 200">
-    <path id="blobPath" fill="#e8a1a1"></path>
+  <!-- Smooth SMIL Morphing SVG Blob -->
+  <svg class="blob" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ff7a7a" />
+        <stop offset="100%" stop-color="#c084fc" />
+      </linearGradient>
+    </defs>
+    <path fill="url(#blobGrad)">
+      <animate 
+        attributeName="d" 
+        dur="12s" 
+        repeatCount="indefinite"
+        values="
+          M45.7,-77.3C58.3,-71.4,67,-58.5,73.1,-44.8C79.2,-31.1,82.8,-15.5,82.2,-0.3C81.7,14.8,77,29.7,69.5,42.5C62,55.3,51.8,66,39.3,72.7C26.8,79.5,13.4,82.3,-0.7,83.5C-14.8,84.7,-29.6,84.4,-42.6,78.1C-55.7,71.8,-67,59.5,-73.9,45.4C-80.8,31.3,-83.3,15.6,-83.4,-0.1C-83.5,-15.8,-81.3,-31.5,-74.1,-44.9C-66.9,-58.3,-54.7,-69.3,-40.8,-74.6C-27,-79.8,-13.5,-79.3,1,-80.9C15.5,-82.5,31.1,-86.2,45.7,-77.3Z;
+          M47.2,-64.8C59.6,-57.4,67.3,-42.4,70.8,-26.8C74.3,-11.2,73.5,5.1,68.9,20.8C64.3,36.5,55.8,51.5,43.2,60.5C30.6,69.5,13.8,72.4,-1.8,74.8C-17.4,77.2,-34.7,79.1,-47.9,73C-61.1,66.9,-70.2,52.8,-75,37.3C-79.9,21.8,-80.5,4.9,-78,-11.1C-75.5,-27.1,-69.9,-42.3,-58.9,-50.7C-47.9,-59.1,-31.6,-60.7,-16.9,-63.9C-2.2,-67.1,10.9,-71.9,25.2,-72.1C39.5,-72.3,34.8,-72.1,47.2,-64.8Z;
+          M42.3,-71.5C53.7,-64.4,61.1,-50.9,65.8,-36.8C70.5,-22.7,72.6,-7.9,71.2,6.3C69.8,20.6,65,34.4,56.7,45.4C48.4,56.4,36.7,64.7,23.5,69.5C10.3,74.3,-4.3,75.7,-18.2,72.4C-32.1,69.1,-45.3,61.1,-55.8,50C-66.3,38.9,-74.1,24.7,-77.7,8.9C-81.3,-6.9,-80.7,-24.3,-73.4,-37.9C-66.1,-51.5,-52.1,-61.3,-37.3,-67.2C-22.5,-73.1,-6.9,-75.1,7.9,-76.7C22.7,-78.3,30.9,-78.6,42.3,-71.5Z;
+          M45.7,-77.3C58.3,-71.4,67,-58.5,73.1,-44.8C79.2,-31.1,82.8,-15.5,82.2,-0.3C81.7,14.8,77,29.7,69.5,42.5C62,55.3,51.8,66,39.3,72.7C26.8,79.5,13.4,82.3,-0.7,83.5C-14.8,84.7,-29.6,84.4,-42.6,78.1C-55.7,71.8,-67,59.5,-73.9,45.4C-80.8,31.3,-83.3,15.6,-83.4,-0.1C-83.5,-15.8,-81.3,-31.5,-74.1,-44.9C-66.9,-58.3,-54.7,-69.3,-40.8,-74.6C-27,-79.8,-13.5,-79.3,1,-80.9C15.5,-82.5,31.1,-86.2,45.7,-77.3Z"
+      />
+    </path>
   </svg>
 
-  <div>
-    <h1 class="type">Justin Joe Mathew</h1>
-    <p class="type">Computer Science Engineering Student</p>
+  <div class="hero-content">
+    <h1>Justin Joe Mathew</h1>
+    <p><span id="typewriter"></span><span class="type-cursor"></span></p>
   </div>
 </div>
 
-<!-- ================= ABOUT ================= -->
+<!-- ================= ABOUT / IDE CARD ================= -->
 <section id="about">
-  <div class="cards">
-    <div class="card">
-      Curious engineer who enjoys building things that look simple but
-      have depth underneath.
+  <h2 class="section-title">About Me</h2>
+  <div class="about-grid">
+    <!-- VS Code Style IDE Card -->
+    <div class="ide-window">
+      <div class="ide-header">
+        <div class="ide-dots">
+          <span class="ide-dot red"></span>
+          <span class="ide-dot yellow"></span>
+          <span class="ide-dot green"></span>
+        </div>
+        <div class="ide-title">justin_profile.json</div>
+      </div>
+      <div class="ide-content">
+        <span class="syntax">{</span><br>
+        &nbsp;&nbsp;<span class="key">"name"</span><span class="syntax">:</span> <span class="val">"Justin Joe Mathew"</span><span class="syntax">,</span><br>
+        &nbsp;&nbsp;<span class="key">"occupation"</span><span class="syntax">:</span> <span class="val">"Computer Science Engineering Student"</span><span class="syntax">,</span><br>
+        &nbsp;&nbsp;<span class="key">"bio"</span><span class="syntax">:</span> <span class="val">"Curious engineer who enjoys building systems that look simple on the outside but maintain elegant depth underneath."</span><span class="syntax">,</span><br>
+        &nbsp;&nbsp;<span class="key">"hobbies"</span><span class="syntax">:</span> <span class="syntax">[</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Piano Performance"</span><span class="syntax">,</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Landscape Photography"</span><span class="syntax">,</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="val">"Photoshop Compositing"</span><br>
+        &nbsp;&nbsp;<span class="syntax">]</span><span class="syntax">,</span><br>
+        &nbsp;&nbsp;<span class="key">"location"</span><span class="syntax">:</span> <span class="val">"Kerala, India"</span><br>
+        <span class="syntax">}</span>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ================= SKILLS ================= -->
 <section id="skills">
-  <div class="skill">
-    HTML / CSS
-    <div class="bar"><span style="width:80%"></span></div>
-  </div>
-  <div class="skill">
-    JavaScript
-    <div class="bar"><span style="width:65%"></span></div>
+  <h2 class="section-title">Technical Skills</h2>
+  
+  <div class="skills-grid">
+    <!-- Skill 1 -->
+    <div class="skill-card">
+      <div class="skill-circle-container">
+        <svg class="skill-circle" viewBox="0 0 100 100">
+          <circle class="bg-circle" />
+          <circle class="fg-circle" style="stroke-dashoffset: calc(251.2 - (251.2 * 80) / 100)" />
+        </svg>
+        <div class="skill-percent">80%</div>
+      </div>
+      <div class="skill-name">HTML & CSS</div>
+    </div>
+
+    <!-- Skill 2 -->
+    <div class="skill-card">
+      <div class="skill-circle-container">
+        <svg class="skill-circle" viewBox="0 0 100 100">
+          <circle class="bg-circle" />
+          <circle class="fg-circle" style="stroke-dashoffset: calc(251.2 - (251.2 * 65) / 100)" />
+        </svg>
+        <div class="skill-percent">65%</div>
+      </div>
+      <div class="skill-name">JavaScript</div>
+    </div>
   </div>
 </section>
 
 <!-- ================= GALLERY ================= -->
 <section id="gallery">
-  <h2>Gallery</h2>
+  <h2 class="section-title">Creative Gallery</h2>
 
-  <div class="gallery">
+  <div class="gallery-grid">
+    <!-- Gallery 1 -->
     <figure>
-      <img src="images/gallery/image1.jpg" alt="Gallery image 1">
+      <img src="images/gallery/image1.jpg" alt="Piano Keys close-up">
       <figcaption>
-        Piano
+        <h3>Piano</h3>
+        <p>Acoustic melodies & performance</p>
       </figcaption>
     </figure>
 
+    <!-- Gallery 2 -->
     <figure>
-      <img src="images/gallery/image2.jpg" alt="Gallery image 2">
+      <img src="images/gallery/image2.jpg" alt="Nature Photography">
       <figcaption>
-        Photography
+        <h3>Photography</h3>
+        <p>Landscape & depth compositions</p>
       </figcaption>
     </figure>
 
+    <!-- Gallery 3 -->
     <figure>
-      <img src="images/gallery/image3.jpg" alt="Gallery image 3">
+      <img src="images/gallery/image3.jpg" alt="Photoshop Digital Artwork">
       <figcaption>
-        Photoshop
+        <h3>Photoshop</h3>
+        <p>Surreal digital composites & editing</p>
       </figcaption>
     </figure>
   </div>
 </section>
-
 
 <!-- ================= CONTACT ================= -->
 <section id="contact">
-  <div class="socials">
-    <a href="#">Instagram</a>
-    <a href="#">LinkedIn</a>
-    <p>📧 jvstin47@gmail.com</p>
+  <h2 class="section-title">Get In Touch</h2>
+  
+  <div class="contact-container">
+    <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent!');">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" required placeholder="John Doe">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" required placeholder="Write your message here..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message</button>
+    </form>
+
+    <div class="contact-socials">
+      <a href="#" target="_blank">Instagram</a>
+      <a href="#" target="_blank">LinkedIn</a>
+    </div>
+    <div style="text-align: center; margin-top: 24px; color: var(--text-secondary); font-family: monospace;">
+      📧 jvstin47@gmail.com
+    </div>
   </div>
 </section>
 
+<!-- ================= FOOTER ================= -->
 <footer>
-  © 2026 — 47
+  © 2026 — Built by <span>47</span>. All rights reserved.
 </footer>
 
 <script>
-/* Hamburger */
+/* Mobile Menu Toggle */
 function toggleMenu(){
   document.getElementById("menu").classList.toggle("show");
+  const menuBtn = document.getElementById("menuBtn");
+  menuBtn.textContent = menuBtn.textContent === "☰" ? "✕" : "☰";
 }
 
-/* Typewriter (no cursor) */
-document.querySelectorAll(".type").forEach(el=>{
-  const text = el.textContent;
-  el.textContent = "";
-  let i = 0;
-  setInterval(()=>{
-    if(i < text.length){
-      el.textContent += text[i++];
-    }
-  }, 60);
-});
+function closeMenu(){
+  document.getElementById("menu").classList.remove("show");
+  document.getElementById("menuBtn").textContent = "☰";
+}
 
-/* SVG morph */
-const shapes = [
-"M43.8,-74.5C57.2,-67.1,68.5,-57.2,74.4,-44.8C80.3,-32.4,80.8,-16.2,79.6,-0.7C78.4,14.8,75.5,29.6,68.3,42.3C61.1,55,49.6,65.6,36.4,71.7C23.2,77.8,11.6,79.4,-1.7,82.3C-15,85.2,-30,89.4,-42.1,83.4C-54.2,77.4,-63.3,61.1,-70.3,45.6C-77.3,30.1,-82.2,15,-80.3,1.1C-78.3,-12.9,-69.6,-25.8,-60.3,-37.9C-51,-50,-41.2,-61.3,-29,-70.2C-16.8,-79.1,-8.4,-85.6,3.2,-90.5C14.8,-95.4,29.6,-98.7,43.8,-74.5Z",
-"M36.7,-63.4C49.3,-56.2,62.2,-49.4,69.1,-38.7C76,-28,76.8,-14,75.6,-0.7C74.4,12.6,71.3,25.2,64.7,36.8C58.1,48.4,48,59,35.9,64.8C23.8,70.6,11.9,71.6,-1.2,73.7C-14.3,75.8,-28.6,79,-40.6,73.6C-52.6,68.2,-62.3,54.2,-68.7,39.8C-75.1,25.4,-78.2,12.7,-77.2,0.6C-76.2,-11.5,-71.2,-23,-63.4,-33.8C-55.6,-44.6,-44.9,-54.7,-32.9,-62.8C-20.9,-70.9,-10.4,-77,1.3,-79.2C13,-81.4,26,-79.7,36.7,-63.4Z"
+/* Premium Cycling Typewriter Effect */
+const typewriterElement = document.getElementById("typewriter");
+const words = [
+  "Computer Science Engineering Student",
+  "Creative Designer",
+  "Pianist & Photographer",
+  "Problem Solver"
 ];
-let i=0;
-setInterval(()=>{
-  document.getElementById("blobPath").setAttribute("d",shapes[i++%2]);
-},4000);
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typeSpeed = 80;
+
+function typeEffect() {
+  const currentWord = words[wordIndex];
+  
+  if (isDeleting) {
+    typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+    charIndex--;
+    typeSpeed = 40; // delete faster
+  } else {
+    typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+    charIndex++;
+    typeSpeed = 80; // regular typing speed
+  }
+
+  if (!isDeleting && charIndex === currentWord.length) {
+    isDeleting = true;
+    typeSpeed = 2000; // Pause at full word
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    wordIndex = (wordIndex + 1) % words.length;
+    typeSpeed = 500; // Pause before next word
+  }
+
+  setTimeout(typeEffect, typeSpeed);
+}
+
+// Start Typewriter
+document.addEventListener("DOMContentLoaded", () => {
+  setTimeout(typeEffect, 1000);
+});
 </script>
 
 </body>
